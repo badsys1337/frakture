@@ -1,0 +1,118 @@
+<Window x:Class="TriggerLAG.MacroSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Macro Configuration" Height="350" Width="400"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        MouseDown="Window_MouseDown">
+
+    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="5" Opacity="0.5"/>
+        </Border.Effect>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> 
+                <RowDefinition Height="*"/>    
+                <RowDefinition Height="Auto"/> 
+            </Grid.RowDefinitions>
+
+            
+            <Grid Grid.Row="0" Margin="0,0,0,20">
+                <TextBlock Text="Double Edit Settings" FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource BrushTextPrimary}" VerticalAlignment="Center"/>
+                <Button HorizontalAlignment="Right" Style="{StaticResource StyleCloseBtn}" Content="&#xE8BB;" Click="BtnClose_Click">
+                     <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="8" Width="30" Height="30">
+                                <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                           FontFamily="Segoe MDL2 Assets" FontSize="10"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+            
+            <StackPanel Grid.Row="1">
+                
+                
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Edit Bind" VerticalAlignment="Center" Foreground="{StaticResource BrushTextSecondary}"/>
+                    <TextBox x:Name="TxtEditBind" Grid.Column="1" Width="120" Height="32" IsReadOnly="True" 
+                             Text="None" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                             PreviewKeyDown="TxtEditBind_PreviewKeyDown" GotFocus="TxtEditBind_GotFocus" LostFocus="TxtBind_LostFocus"
+                             Cursor="Hand"/>
+                </Grid>
+
+                
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Confirm Bind" VerticalAlignment="Center" Foreground="{StaticResource BrushTextSecondary}"/>
+                    <TextBox x:Name="TxtConfirmBind" Grid.Column="1" Width="120" Height="32" IsReadOnly="True" 
+                             Text="None" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                             PreviewKeyDown="TxtConfirmBind_PreviewKeyDown" GotFocus="TxtConfirmBind_GotFocus" LostFocus="TxtBind_LostFocus"
+                             Cursor="Hand"/>
+                </Grid>
+
+                
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Trigger Mode" VerticalAlignment="Center" Foreground="{StaticResource BrushTextSecondary}"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <RadioButton x:Name="RadioToggle" Content="Toggle" Margin="0,0,15,0" Foreground="{StaticResource BrushTextPrimary}" VerticalContentAlignment="Center"/>
+                        <RadioButton x:Name="RadioHold" Content="Hold" IsChecked="True" Foreground="{StaticResource BrushTextPrimary}" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+
+                <Border Height="1" Background="{StaticResource BrushBorder}" Margin="0,0,0,20" Opacity="0.5"/>
+
+                
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Delay (ms)" VerticalAlignment="Center" Foreground="{StaticResource BrushTextSecondary}" Width="80"/>
+                    <Slider x:Name="SliderDelay" Grid.Column="1" Minimum="10" Maximum="500" Value="30" 
+                            TickFrequency="10" IsSnapToTickEnabled="True" Margin="10,0"
+                            ValueChanged="SliderDelay_ValueChanged"/>
+                    <TextBlock x:Name="LblDelay" Grid.Column="2" Text="30" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                </Grid>
+
+                
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Speed (Hold ms)" VerticalAlignment="Center" Foreground="{StaticResource BrushTextSecondary}" Width="100"/>
+                    <Slider x:Name="SliderDuration" Grid.Column="1" Minimum="1" Maximum="100" Value="30" 
+                            TickFrequency="1" IsSnapToTickEnabled="True" Margin="10,0"
+                            ValueChanged="SliderDuration_ValueChanged"/>
+                    <TextBlock x:Name="LblDuration" Grid.Column="2" Text="30" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                </Grid>
+
+            </StackPanel>
+
+            
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button Content="Save" Width="80" Click="BtnSave_Click" Style="{StaticResource StylePrimaryButton}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

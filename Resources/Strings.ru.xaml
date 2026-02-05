@@ -1,0 +1,131 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    
+    
+    <sys:String x:Key="StrHome">Главная</sys:String>
+    <sys:String x:Key="StrLagTrigger">Лаг-триггер</sys:String>
+    <sys:String x:Key="StrHotkeys">Хоткеи</sys:String>
+    <sys:String x:Key="StrMacros">Макросы</sys:String>
+    <sys:String x:Key="StrOptimizer">Оптимизатор</sys:String>
+    <sys:String x:Key="StrAdvanced">Дополнительно</sys:String>
+    <sys:String x:Key="StrHelp">Помощь</sys:String>
+    <sys:String x:Key="StrMadeBy">TriggerLAG</sys:String>
+    
+    
+    <sys:String x:Key="StrWelcome">Добро пожаловать в TriggerLAG</sys:String>
+    <sys:String x:Key="StrInformation">Информация</sys:String>
+    <sys:String x:Key="StrInfoDescription">TriggerLAG — это премиальный, легальный софт для Фортнайта, способный перевернуть любую игру в твою сторону. Он никак не внедряется в саму игру, следовательно не может быть замечен античитом игры и про риск бана ты можешь забыть.</sys:String>
+    <sys:String x:Key="StrSpecialThanks">Особая благодарность:</sys:String>
+    <sys:String x:Key="StrThanksTrump">trump8888 / разработчик</sys:String>
+    <sys:String x:Key="StrThanksRegmysoul">regmysoul / веб хостинг</sys:String>
+    <sys:String x:Key="StrThanksDeku">deku / лицо и менеджер</sys:String>
+    <sys:String x:Key="StrThanksYokan">yokan / лидер команды и дизайнер</sys:String>
+    <sys:String x:Key="StrDefaultSettings">Настройки по умолчанию</sys:String>
+    <sys:String x:Key="StrRegistryTweaks">Твики реестра для снижения задержки</sys:String>
+    <sys:String x:Key="StrQuickActions">Быстрые действия для обновления соединения</sys:String>
+    <sys:String x:Key="StrTcpOptimization">TCP Оптимизация</sys:String>
+    <sys:String x:Key="StrTcpNoDelay">TCP No Delay (Отключить алгоритм Nagle)</sys:String>
+    <sys:String x:Key="StrTcpAckFreq">Частота подтверждения TCP (1)</sys:String>
+    <sys:String x:Key="StrNetworkTools">Сетевые инструменты</sys:String>
+    <sys:String x:Key="StrFortnitePriority">Приоритет Fortnite (QoS)</sys:String>
+    <sys:String x:Key="StrPrioritizeTraffic">Приоритет игрового трафика в Windows и роутере (если поддерживается).</sys:String>
+    <sys:String x:Key="StrFlushDns">Очистить DNS</sys:String>
+    <sys:String x:Key="StrResetWinsock">Сброс Winsock</sys:String>
+    
+    
+    <sys:String x:Key="StrMacrosTitle">Макросы</sys:String>
+    <sys:String x:Key="StrDoubleEditMacro">Макрос двойного редактирования</sys:String>
+    <sys:String x:Key="StrDoubleEditDesc">Автоматически выполняет редактирование и подтверждение.</sys:String>
+    <sys:String x:Key="StrTriggerKey">Клавиша активации</sys:String>
+    <sys:String x:Key="StrClear">Очистить</sys:String>
+    <sys:String x:Key="StrItemCollect">Автосбор предметов</sys:String>
+    <sys:String x:Key="StrItemCollectDesc">Автоматически собирает предметы.</sys:String>
+    <sys:String x:Key="StrConfigureMacroSettings">Настроить макрос</sys:String>
+    <sys:String x:Key="StrConfigureItemCollectSettings">Настроить автосбор</sys:String>
+
+    
+    <sys:String x:Key="StrAdvancedSettings">Дополнительные настройки</sys:String>
+    <sys:String x:Key="StrProcessRestriction">Ограничение процессов</sys:String>
+    <sys:String x:Key="StrProcessRestrictionDesc">Влиять только на трафик определенных процессов.</sys:String>
+    <sys:String x:Key="StrRestrictFortnite">Ограничить для Fortnite (FortniteClient-Win64-Shipping.exe)</sys:String>
+    <sys:String x:Key="StrRestrictNote">Примечание: Это будет динамически фильтровать трафик на основе активных портов игры.</sys:String>
+    <sys:String x:Key="StrCompatibility">Совместимость</sys:String>
+    <sys:String x:Key="StrCompatibilityDesc">Настроить приоритет драйвера для работы с другими сетевыми инструментами.</sys:String>
+    <sys:String x:Key="StrHighPriorityMode">Режим высокого приоритета (Исправление для ExitLag)</sys:String>
+    <sys:String x:Key="StrHighPriorityNote">Включите это, если Frakture перестает работать при использовании оптимизаторов пинга.</sys:String>
+    <sys:String x:Key="StrNotifications">Уведомления</sys:String>
+    <sys:String x:Key="StrNotificationsDesc">Показывать визуальную обратную связь при переключении Frakture.</sys:String>
+    <sys:String x:Key="StrEnableNotifications">Включить уведомления на экране</sys:String>
+    <sys:String x:Key="StrStyle">Стиль</sys:String>
+    <sys:String x:Key="StrStyleMinimal">Минималистичный (Классический)</sys:String>
+    <sys:String x:Key="StrStyleModern">Современный (Закругленный)</sys:String>
+
+    
+    <sys:String x:Key="StrHelpGuide">Помощь и руководство</sys:String>
+    <sys:String x:Key="StrHowItWorks">Как это работает</sys:String>
+    <sys:String x:Key="StrHowItWorksDesc">TriggerLAG перехватывает сетевые пакеты для симуляции различных сетевых условий.</sys:String>
+    <sys:String x:Key="StrModes">Режимы:</sys:String>
+    <sys:String x:Key="StrModeLagSwitchDesc">• Лаг-свитч: Удерживает пакеты. Лучшее для "призрака".</sys:String>
+    <sys:String x:Key="StrModeDropDesc">• Дроп: Полный блок пакетов.</sys:String>
+    <sys:String x:Key="StrModeStaticLagDesc">• Статический лаг: Пинг в мс (слайдер x10).</sys:String>
+    <sys:String x:Key="StrModeWorldFreezeDesc">• Заморозка мира: Мир застывает моментально по бинду. Выстрел всё равно зарегает (Shot-Sync).</sys:String>
+    <sys:String x:Key="StrModeNoteTitle">Информация о режиме</sys:String>
+    <sys:String x:Key="StrModeWorldFreezeNote">Мгновенно замораживает мир. Входящие пакеты блокируются, но выстрелы регистрируются. [ВАЖНО]: Вы ДОЛЖНЫ отключить [входящий] трафик для корректной работы.</sys:String>
+    <sys:String x:Key="StrModeStaticLagNote">Добавляет фиксированную задержку к трафику. Слайдер контролирует задержку (x10). Например, 50 = 500мс пинг.</sys:String>
+    <sys:String x:Key="StrDirections">Направления:</sys:String>
+    <sys:String x:Key="StrInboundDesc">• Входящий: Влияет на данные, идущие К вам (например, движение других игроков).</sys:String>
+    <sys:String x:Key="StrOutboundDesc">• Исходящий: Влияет на данные, идущие ОТ вас (например, ваши выстрелы/движение). Обычно более эффективно для лаг-свитча.</sys:String>
+    <sys:String x:Key="StrOptimizationHelp">Оптимизация:</sys:String>
+    <sys:String x:Key="StrOptimizationDesc">Используйте вкладку Оптимизатор для снижения задержки системы и улучшения маршрутизации пакетов. Ползунок интенсивности контролирует агрессивность TCP оптимизаций.</sys:String>
+
+    
+    <sys:String x:Key="StrNetworkControl">Управление сетью</sys:String>
+    <sys:String x:Key="StrEffectMode">Режим эффекта</sys:String>
+    <sys:String x:Key="StrTargetTraffic">Целевой трафик</sys:String>
+    <sys:String x:Key="StrInbound">Входящий</sys:String>
+    <sys:String x:Key="StrOutbound">Исходящий</sys:String>
+    <sys:String x:Key="StrIntensity">Интенсивность</sys:String>
+    <sys:String x:Key="StrLimitMs">Лимит мс</sys:String>
+    <sys:String x:Key="StrChance">Шанс %</sys:String>
+    <sys:String x:Key="StrDelayMs">Задержка мс</sys:String>
+    <sys:String x:Key="StrEnableGlobalHotkey">Включить глобальный хоткей</sys:String>
+    <sys:String x:Key="StrStart">СТАРТ</sys:String>
+    <sys:String x:Key="StrStop">СТОП</sys:String>
+    
+    
+    <sys:String x:Key="StrModeDrop">Дроп (Отключение/Призрак)</sys:String>
+    <sys:String x:Key="StrModeStaticLag">Статический лаг (Высокий пинг)</sys:String>
+    <sys:String x:Key="StrModeWorldFreeze">Заморозка мира (Ручная)</sys:String>
+
+    
+    <sys:String x:Key="StrKeyBindings">Привязка клавиш</sys:String>
+    <sys:String x:Key="StrStartStopToggle">Переключатель Старт/Стоп</sys:String>
+
+    
+    <sys:String x:Key="StrExitFrakture">Выход из TriggerLAG</sys:String>
+    <sys:String x:Key="StrExitPrompt">Что вы хотите сделать?</sys:String>
+    <sys:String x:Key="StrHideToTray">Свернуть в трей</sys:String>
+    <sys:String x:Key="StrExitApplication">Закрыть приложение</sys:String>
+
+    
+    <sys:String x:Key="StrSettingsTitle">Настройки</sys:String>
+    <sys:String x:Key="StrLanguage">Язык</sys:String>
+    <sys:String x:Key="StrSave">Сохранить</sys:String>
+
+    
+    <sys:String x:Key="StrPressKey">Нажмите клавишу...</sys:String>
+    <sys:String x:Key="StrKey">Клавиша</sys:String>
+    <sys:String x:Key="StrLeftClick">ЛКМ</sys:String>
+    <sys:String x:Key="StrRightClick">ПКМ</sys:String>
+    <sys:String x:Key="StrMiddleClick">СКМ</sys:String>
+    <sys:String x:Key="StrMouse">Мышь</sys:String>
+    <sys:String x:Key="StrNone">Нет</sys:String>
+
+    
+    <sys:String x:Key="StrAuthentication">Аутентификация</sys:String>
+    <sys:String x:Key="StrEnterLicenseKey">Введите лицензионный ключ</sys:String>
+    <sys:String x:Key="StrLogin">Войти</sys:String>
+    <sys:String x:Key="StrSaveMe">Запомнить меня</sys:String>
+
+</ResourceDictionary>

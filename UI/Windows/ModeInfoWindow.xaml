@@ -1,0 +1,22 @@
+<Window x:Class="TriggerLAG.ModeInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Mode Info" Height="280" Width="300"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ShowInTaskbar="False" ResizeMode="NoResize">
+
+    <Grid>
+        <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16" Margin="10" Padding="20">
+
+            <Grid>
+                
+                <Canvas x:Name="SnowCanvas" ClipToBounds="True" IsHitTestVisible="False"/>
+
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource StrModeNoteTitle}" FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,15"/>
+                    <TextBlock x:Name="TxtDescription" FontSize="14" Foreground="{StaticResource BrushTextSecondary}" TextWrapping="Wrap" LineHeight="20"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

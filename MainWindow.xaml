@@ -1,0 +1,656 @@
+<Window x:Class="TriggerLAG.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TriggerLAG" Height="550" Width="800"
+        Icon="TriggerLAG.ico"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        MouseDown="Window_MouseDown">
+
+    <Window.Resources>
+        <Style x:Key="StylePillRadio" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource BrushTextSecondary}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="14">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BrushSurfaceHighlight}"/>
+                                <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="4" ShadowDepth="1" Direction="270" Color="Black" Opacity="0.3"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        
+        <Storyboard x:Key="FadeIn">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3" DecelerationRatio="0.5"/>
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="20,0,-20,0" To="0,0,0,0" Duration="0:0:0.3" DecelerationRatio="0.5"/>
+        </Storyboard>
+        <Storyboard x:Key="FadeOut">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.15"/>
+        </Storyboard>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3" DecelerationRatio="0.5"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid>
+        
+        <Border x:Name="MainBorder" Background="{StaticResource BrushBackground}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16">
+            <Border.Clip>
+                <RectangleGeometry Rect="0,0,800,550" RadiusX="16" RadiusY="16"/>
+            </Border.Clip>
+            <Grid>
+                
+                <Canvas x:Name="SnowCanvas" ClipToBounds="True" IsHitTestVisible="False"/>
+
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    
+                    
+                    <Path x:Name="SpotlightOverlay" Fill="Black" Opacity="0" IsHitTestVisible="False" Grid.ColumnSpan="2" Panel.ZIndex="999">
+                        <Path.Data>
+                            <CombinedGeometry GeometryCombineMode="Exclude">
+                                <CombinedGeometry.Geometry1>
+                                    <RectangleGeometry Rect="0,0,800,550"/>
+                                </CombinedGeometry.Geometry1>
+                                <CombinedGeometry.Geometry2>
+                                    <RectangleGeometry x:Name="HighlightRect" Rect="0,0,0,0" RadiusX="8" RadiusY="8"/>
+                                </CombinedGeometry.Geometry2>
+                            </CombinedGeometry>
+                        </Path.Data>
+                    </Path>
+                    
+                    
+                    <Border Grid.Column="0" Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,0,1,0" CornerRadius="16,0,0,16">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="24,0,0,0">
+                                    <TextBlock Text="TRIGGERLAG" FontWeight="Bold" FontSize="16" Foreground="{StaticResource BrushTextPrimary}"/>
+                                </StackPanel>
+
+                            
+                            <StackPanel Grid.Row="1" Margin="0,20,0,0">
+                                <RadioButton Content="{DynamicResource StrHome}" GroupName="Nav" IsChecked="True" Style="{StaticResource StyleTabButton}" Checked="Nav_Checked" Tag="Home"/>
+                                <RadioButton Content="{DynamicResource StrLagTrigger}" GroupName="Nav" Style="{StaticResource StyleTabButton}" Checked="Nav_Checked" Tag="LagTrigger"/>
+                                <RadioButton Content="{DynamicResource StrHotkeys}" GroupName="Nav" Style="{StaticResource StyleTabButton}" Checked="Nav_Checked" Tag="Hotkeys"/>
+                                <RadioButton Content="{DynamicResource StrMacros}" GroupName="Nav" Style="{StaticResource StyleTabButton}" Checked="Nav_Checked" Tag="Macros"/>
+                                <RadioButton Content="{DynamicResource StrOptimizer}" GroupName="Nav" Style="{StaticResource StyleTabButton}" Checked="Nav_Checked" Tag="Optimizer"/>
+                                <RadioButton Content="{DynamicResource StrAdvanced}" GroupName="Nav" Style="{StaticResource StyleTabButton}" Checked="Nav_Checked" Tag="Advanced"/>
+                                <RadioButton Content="{DynamicResource StrHelp}" GroupName="Nav" Style="{StaticResource StyleTabButton}" Checked="Nav_Checked" Tag="Help"/>
+                            </StackPanel>
+
+                            
+                            <TextBlock Grid.Row="2" Text="{DynamicResource StrMadeBy}" Foreground="{StaticResource BrushTextSecondary}" FontSize="10" Margin="20" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </Border>
+
+                    
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/> 
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+                            <Button x:Name="BtnModeInfo" Style="{StaticResource StyleTitleBarBtn}" Content="&#xE946;" Click="BtnModeInfo_Click"/>
+                            <Button Style="{StaticResource StyleTitleBarBtn}" Content="&#xE713;" Click="BtnSettings_Click"/>
+                            <Button Style="{StaticResource StyleTitleBarBtn}" Content="&#xE921;" Click="BtnMinimize_Click"/>
+                            <Button Style="{StaticResource StyleCloseBtn}" Content="&#xE8BB;" Click="BtnClose_Click" Command="{Binding CloseCommand}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="0,16,0,0">
+                                            <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                       FontFamily="Segoe MDL2 Assets" FontSize="10"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+
+                        
+                        <Grid Grid.Row="1" Margin="30,10,30,30">
+                            
+                            
+                            <Grid x:Name="TabHome" Visibility="Visible">
+                                <StackPanel VerticalAlignment="Top" MaxWidth="540" HorizontalAlignment="Left">
+                                    <TextBlock Text="{DynamicResource StrWelcome}" FontSize="24" FontWeight="Light" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,25"/>
+                                    
+                                    <Border Background="Transparent" BorderThickness="0" Padding="0" Margin="0,0,0,24">
+                                        <StackPanel>
+                                            
+                                            <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="12" Padding="20" Margin="0,0,0,20">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    
+                                                    <StackPanel Grid.Column="0" Margin="0,0,40,0">
+                                                        <TextBlock Text="PROFILE" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,4"/>
+                                                        <TextBlock x:Name="TxtUsername" Text="Loading..." FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource BrushTextPrimary}"/>
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                        <StackPanel Margin="0,0,40,0">
+                                                            <TextBlock Text="PLAN" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,4"/>
+                                                            <TextBlock x:Name="TxtPlan" Text="-" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource BrushTextPrimary}"/>
+                                                        </StackPanel>
+                                                        
+                                                        <StackPanel>
+                                                            <TextBlock Text="EXPIRES" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,4"/>
+                                                            <TextBlock x:Name="TxtExpires" Text="-" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource BrushTextPrimary}"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+
+
+                                            
+                                            <TextBlock Text="{DynamicResource StrInfoDescription}" Foreground="{StaticResource BrushTextPrimary}" FontSize="15" LineHeight="22" TextWrapping="Wrap" Margin="0,0,0,20"/>
+                                            
+                                            <Button Content="{DynamicResource StrDefaultSettings}" Click="BtnDefaultSettings_Click" HorizontalAlignment="Left" Cursor="Hand" Background="Transparent" BorderThickness="0" Foreground="#3399FF" FontSize="14">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"/>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </StackPanel>
+                                    </Border>
+                                    
+                                    
+                                </StackPanel>
+                                
+                                
+                                <Button x:Name="BtnTelegram" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20" 
+                                        Width="48" Height="48" Click="BtnTelegram_Click" Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid>
+                                                <Ellipse Fill="{StaticResource BrushSurface}" Stroke="{StaticResource BrushBorder}" StrokeThickness="1"/>
+                                                <Image Source="/telegram.png" Margin="10"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="0.8"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+
+                            
+                            <Grid x:Name="TabLagTrigger" Visibility="Hidden">
+                                <StackPanel VerticalAlignment="Top" MaxWidth="540" HorizontalAlignment="Left">
+                                    
+                                    <TextBlock Text="{DynamicResource StrNetworkControl}" FontSize="24" FontWeight="Light" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,25"/>
+
+                                    
+                                    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" Margin="0,0,0,24" CornerRadius="16">
+                                        <StackPanel>
+                                            
+                                            <Grid Margin="0,0,0,24">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="24"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                
+                                                <StackPanel Grid.Column="0">
+                                                    <TextBlock Text="{DynamicResource StrEffectMode}" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,8" FontSize="13" FontWeight="Medium"/>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <ComboBox x:Name="ModeCombo" SelectionChanged="ModeCombo_SelectionChanged" Height="40" FontSize="13" VerticalContentAlignment="Center">
+                                                            <ComboBoxItem Content="{DynamicResource StrModeWorldFreeze}"/>
+                                                            <ComboBoxItem Content="{DynamicResource StrModeDelayPeek}"/>
+                                                            <ComboBoxItem Content="{DynamicResource StrModeStaticLag}"/>
+                                                            <ComboBoxItem Content="Adaptive Long Lag"/>
+                                                        </ComboBox>
+                                                    </Grid>
+                                                        
+                                                    
+                                                    <Grid x:Name="DelayPeekSettingsPanel" Visibility="Collapsed" Margin="0,10,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="50"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackPanel>
+                                                            <TextBlock Text="{DynamicResource StrDelayMs}" Foreground="{StaticResource BrushTextSecondary}" FontSize="11" Margin="2,0,0,4"/>
+                                                            <Slider x:Name="DelayPeekSlider" Minimum="100" Maximum="1500" Value="500" TickFrequency="50" IsSnapToTickEnabled="True" 
+                                                                    ValueChanged="DelayPeekSlider_ValueChanged"/>
+                                                        </StackPanel>
+                                                        <TextBlock Grid.Column="1" x:Name="DelayPeekDurationText" Text="500ms" 
+                                                                   Foreground="{StaticResource BrushTextPrimary}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                                    </Grid>
+                                                </StackPanel>
+                                                
+                                                
+                                                <StackPanel Grid.Column="2">
+                                                    <TextBlock Text="{DynamicResource StrTargetTraffic}" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,8" FontSize="13" FontWeight="Medium"/>
+                                                    <Border Background="{StaticResource BrushBackground}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="8" Height="40" Padding="12,0">
+                                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                            <CheckBox x:Name="CheckInbound" Content="{DynamicResource StrInbound}" IsChecked="True" Margin="0,0,16,0"/>
+                                                            <CheckBox x:Name="CheckOutbound" Content="{DynamicResource StrOutbound}" IsChecked="True"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            
+                                            <Border Height="1" Background="{StaticResource BrushBorder}" Margin="0,0,0,24" Opacity="0.5"/>
+
+                                            
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="50"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <TextBlock x:Name="ValueLabel" Text="{DynamicResource StrIntensity}" VerticalAlignment="Center" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" FontWeight="Medium" Width="70"/>
+                                                
+                                                <Slider x:Name="ValueSlider" Grid.Column="1" Minimum="0" Maximum="100" Value="50" 
+                                                        TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Margin="10,0"
+                                                        ValueChanged="ValueSlider_ValueChanged"/>
+                                                
+                                                <TextBlock Grid.Column="2" Text="{Binding ElementName=ValueSlider, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{StaticResource BrushTextPrimary}" FontSize="14" FontWeight="Bold"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+
+                                    
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <StackPanel VerticalAlignment="Center">
+                                            <CheckBox x:Name="CheckMacroEnabled" Content="{DynamicResource StrEnableGlobalHotkey}" FontSize="14" FontWeight="Medium"/>
+                                            <TextBlock x:Name="StatusText" Text="" Foreground="{StaticResource BrushTextSecondary}" FontSize="12" Margin="28,4,0,0"/>
+                                        </StackPanel>
+
+                                        <Button x:Name="BtnStart" Grid.Column="1" Content="{DynamicResource StrStart}" Click="BtnStart_Click" Style="{StaticResource StylePrimaryButton}" Width="140" Height="48" FontSize="15" FontWeight="Bold"/>
+                                    </Grid>
+
+                                    
+                                    <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" Opacity="0.5">
+                                        
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+
+                            
+                            <Grid x:Name="TabHotkeys" Visibility="Hidden">
+                                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,0,10,0">
+                                    <TextBlock Text="{DynamicResource StrKeyBindings}" FontSize="24" FontWeight="Light" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,25"/>
+
+                                    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="20" CornerRadius="12">
+                                        <StackPanel>
+                                            <Grid Margin="0,0,0,10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel>
+                                                <TextBlock Text="{DynamicResource StrStartStopToggle}" Foreground="{StaticResource BrushTextPrimary}" FontSize="14" Margin="0,0,0,4" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                                
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBox x:Name="BindKeyText" Text="None" IsReadOnly="True" Height="40" Width="140" 
+                                                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                             PreviewKeyDown="BindKeyText_PreviewKeyDown"
+                                                             GotFocus="BindKeyText_GotFocus"
+                                                             LostFocus="BindKeyText_LostFocus"
+                                                             Margin="0,0,12,0"
+                                                             FontWeight="Medium" FontSize="13"/>
+                                                    <Button Content="Clear" Click="BtnClearBind_Click" Style="{StaticResource StyleSmallButton}" Height="40" Width="60"/>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Border Height="1" Background="{StaticResource BrushBorder}" Margin="0,10,0,20" Opacity="0.5"/>
+
+                                            <TextBlock Text="Activation Mode" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" Margin="0,0,0,10"/>
+                                            <Border Background="{StaticResource BrushBackground}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="18" Padding="2" HorizontalAlignment="Left">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <RadioButton x:Name="RadioToggle" Content="Toggle" GroupName="HotkeyMode" IsChecked="True" Width="100" Height="32" Style="{StaticResource StylePillRadio}"/>
+                                                    <RadioButton x:Name="RadioHold" Content="Hold" GroupName="HotkeyMode" Width="100" Height="32" Style="{StaticResource StylePillRadio}"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+
+                            
+                            <Grid x:Name="TabMacros" Visibility="Hidden">
+                                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,0,10,0">
+                                    <TextBlock Text="{DynamicResource StrMacrosTitle}" FontSize="24" FontWeight="Light" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,25"/>
+
+                                    
+                                    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" CornerRadius="16">
+                                        <StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <StackPanel>
+                                                    <TextBlock Text="{DynamicResource StrDoubleEditMacro}" Foreground="{StaticResource BrushTextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                                    <TextBlock Text="{DynamicResource StrDoubleEditDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13"/>
+                                                </StackPanel>
+
+                                                <CheckBox x:Name="CheckDoubleEdit" Grid.Column="1" IsChecked="False" Checked="CheckDoubleEdit_Checked" Unchecked="CheckDoubleEdit_Unchecked" VerticalAlignment="Center">
+                                                    <CheckBox.LayoutTransform>
+                                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                                    </CheckBox.LayoutTransform>
+                                                </CheckBox>
+                                            </Grid>
+
+                                            <Border Height="1" Background="{StaticResource BrushBorder}" Margin="0,20,0,20" Opacity="0.5"/>
+
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <TextBlock Text="{DynamicResource StrTriggerKey}" VerticalAlignment="Center" Foreground="{StaticResource BrushTextSecondary}"/>
+
+                                                
+                                                <Grid Grid.Column="1" Margin="0,0,10,0">
+                                                    <Grid.ColumnDefinitions>
+                                                         <ColumnDefinition Width="Auto"/>
+                                                         <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox x:Name="TxtDoubleEditTrigger" Text="None" IsReadOnly="True" Height="32" Width="100" 
+                                                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                             PreviewKeyDown="TxtDoubleEditTrigger_PreviewKeyDown"
+                                                             GotFocus="TxtDoubleEditTrigger_GotFocus"
+                                                             LostFocus="TxtDoubleEditTrigger_LostFocus"
+                                                             Margin="0,0,10,0"
+                                                             FontWeight="Medium" FontSize="13"/>
+                                                    <Button Grid.Column="1" Content="{DynamicResource StrClear}" Click="BtnClearDoubleEditTrigger_Click" Style="{StaticResource StyleSmallButton}" Height="32" Width="50"/>
+                                                </Grid>
+
+                                                
+                                                <Button Grid.Column="2" Content="&#xE713;" Style="{StaticResource StyleTitleBarBtn}" Width="40" Height="32"
+                                                        Click="BtnDoubleEditSettings_Click" ToolTip="{DynamicResource StrConfigureMacroSettings}">
+                                                    <Button.Template>
+                                                         <ControlTemplate TargetType="Button">
+                                                            <Border Background="{TemplateBinding Background}" CornerRadius="8" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1">
+                                                                <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                                           FontFamily="Segoe MDL2 Assets" FontSize="14"/>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="{StaticResource BrushSurfaceHighlight}"/>
+                                                                    <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                </Button>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+
+                                    
+                                    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" CornerRadius="16" Margin="0,20,0,0">
+                                        <StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <StackPanel>
+                                                    <TextBlock Text="{DynamicResource StrItemCollect}" Foreground="{StaticResource BrushTextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                                    <TextBlock Text="{DynamicResource StrItemCollectDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13"/>
+                                                </StackPanel>
+
+                                                <CheckBox x:Name="CheckItemCollect" Grid.Column="1" IsChecked="False" Checked="CheckItemCollect_Checked" Unchecked="CheckItemCollect_Unchecked" VerticalAlignment="Center">
+                                                    <CheckBox.LayoutTransform>
+                                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                                    </CheckBox.LayoutTransform>
+                                                </CheckBox>
+                                            </Grid>
+
+                                            <Border Height="1" Background="{StaticResource BrushBorder}" Margin="0,20,0,20" Opacity="0.5"/>
+
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <TextBlock Text="{DynamicResource StrTriggerKey}" VerticalAlignment="Center" Foreground="{StaticResource BrushTextSecondary}"/>
+
+                                                
+                                                <Grid Grid.Column="1" Margin="0,0,10,0">
+                                                    <Grid.ColumnDefinitions>
+                                                         <ColumnDefinition Width="Auto"/>
+                                                         <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox x:Name="TxtItemCollectTrigger" Text="None" IsReadOnly="True" Height="32" Width="100" 
+                                                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                             PreviewKeyDown="TxtItemCollectTrigger_PreviewKeyDown"
+                                                             GotFocus="TxtItemCollectTrigger_GotFocus"
+                                                             LostFocus="TxtItemCollectTrigger_LostFocus"
+                                                             Margin="0,0,10,0"
+                                                             FontWeight="Medium" FontSize="13"/>
+                                                    <Button Grid.Column="1" Content="{DynamicResource StrClear}" Click="BtnClearItemCollectTrigger_Click" Style="{StaticResource StyleSmallButton}" Height="32" Width="50"/>
+                                                </Grid>
+
+                                                
+                                                <Button Grid.Column="2" Content="&#xE713;" Style="{StaticResource StyleTitleBarBtn}" Width="40" Height="32"
+                                                        Click="BtnItemCollectSettings_Click" ToolTip="{DynamicResource StrConfigureItemCollectSettings}">
+                                                    <Button.Template>
+                                                         <ControlTemplate TargetType="Button">
+                                                            <Border Background="{TemplateBinding Background}" CornerRadius="8" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1">
+                                                                <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                                           FontFamily="Segoe MDL2 Assets" FontSize="14"/>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="{StaticResource BrushSurfaceHighlight}"/>
+                                                                    <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                </Button>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+
+                            
+                            <Grid x:Name="TabOptimizer" Visibility="Hidden">
+                                <ScrollViewer Style="{StaticResource MinimalScrollViewer}" VerticalScrollBarVisibility="Auto" Padding="0,0,10,0" Margin="0,0,0,0">
+                                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                    <TextBlock Text="Ping Optimizer" FontSize="24" FontWeight="Light" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,25"/>
+
+                                    
+                                    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" CornerRadius="16" Margin="0,0,0,20">
+                                        <StackPanel>
+                                            <TextBlock Text="{DynamicResource StrTcpOptimization}" Foreground="{StaticResource BrushTextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                            <TextBlock Text="{DynamicResource StrRegistryTweaks}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" Margin="0,0,0,20"/>
+
+                                            <CheckBox x:Name="CheckTcpNoDelay" Content="{DynamicResource StrTcpNoDelay}" FontSize="14" Margin="0,0,0,10" Click="CheckTcpNoDelay_Click"/>
+                                            <CheckBox x:Name="CheckTcpAckFreq" Content="{DynamicResource StrTcpAckFreq}" FontSize="14" Click="CheckTcpAckFreq_Click"/>
+                                            
+                                            <Grid Margin="0,20,0,0">
+                                                <TextBlock Text="{DynamicResource StrIntensity}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" Margin="0,0,0,8"/>
+                                                <Slider x:Name="OptimizerSlider" Minimum="0" Maximum="100" Value="50" TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="OptimizerSlider_ValueChanged" Margin="0,20,0,0"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+
+                                    
+                                    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" CornerRadius="16" Margin="0,0,0,20">
+                                        <StackPanel>
+                                            <TextBlock Text="{DynamicResource StrNetworkTools}" Foreground="{StaticResource BrushTextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                            <TextBlock Text="{DynamicResource StrQuickActions}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" Margin="0,0,0,20"/>
+
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Content="{DynamicResource StrFlushDns}" Grid.Column="0" Height="40" Style="{StaticResource StylePrimaryButton}" Click="BtnFlushDns_Click"/>
+                                                <Button Content="{DynamicResource StrResetWinsock}" Grid.Column="2" Height="40" Style="{StaticResource StylePrimaryButton}" Click="BtnResetWinsock_Click"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+
+                                    
+                                    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" CornerRadius="16">
+                                        <StackPanel>
+                                            <TextBlock Text="{DynamicResource StrFortnitePriority}" Foreground="{StaticResource BrushTextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                            <TextBlock Text="{DynamicResource StrPrioritizeTraffic}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" Margin="0,0,0,20"/>
+
+                                            <CheckBox x:Name="CheckFortniteQoS" Content="Enable High Priority QoS &amp; Process Logic" FontSize="14" Click="CheckFortniteQoS_Click"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                                </ScrollViewer>
+                            </Grid>
+
+                            
+                            <Grid x:Name="TabAdvanced" Visibility="Hidden">
+                                <ScrollViewer x:Name="AdvancedScrollViewer" Style="{StaticResource MinimalScrollViewer}" VerticalScrollBarVisibility="Auto" Padding="0,0,10,0" Margin="0,0,0,0" ScrollChanged="AdvancedScrollViewer_ScrollChanged">
+                                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                                        <TextBlock Text="{DynamicResource StrAdvancedSettings}" FontSize="24" FontWeight="Light" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,25"/>
+
+                                        <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" CornerRadius="16">
+                                        <StackPanel>
+                                            <TextBlock Text="{DynamicResource StrProcessRestriction}" Foreground="{StaticResource BrushTextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                            <TextBlock Text="{DynamicResource StrProcessRestrictionDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" Margin="0,0,0,20" TextWrapping="Wrap"/>
+
+                                            <CheckBox x:Name="CheckFortniteOnly" Content="{DynamicResource StrRestrictFortnite}" FontSize="14"/>
+                                            <TextBlock Text="{DynamicResource StrRestrictNote}" Foreground="{StaticResource BrushTextSecondary}" FontSize="12" Margin="28,6,0,0" FontStyle="Italic" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" CornerRadius="16" Margin="0,20,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{DynamicResource StrCompatibility}" Foreground="{StaticResource BrushTextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                            <TextBlock Text="{DynamicResource StrCompatibilityDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" Margin="0,0,0,20" TextWrapping="Wrap"/>
+
+                                            <CheckBox x:Name="CheckHighPriority" Content="{DynamicResource StrHighPriorityMode}" FontSize="14"/>
+                                            <TextBlock Text="{DynamicResource StrHighPriorityNote}" Foreground="{StaticResource BrushTextSecondary}" FontSize="12" Margin="28,6,0,0" FontStyle="Italic" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" CornerRadius="16" Margin="0,20,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="{DynamicResource StrNotifications}" Foreground="{StaticResource BrushTextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                            <TextBlock Text="{DynamicResource StrNotificationsDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" Margin="0,0,0,20" TextWrapping="Wrap"/>
+                                            <CheckBox x:Name="CheckNotifications" Content="{DynamicResource StrEnableNotifications}" FontSize="14"/>
+                                            
+                                            <StackPanel Margin="28,16,0,0">
+                                                <TextBlock Text="{DynamicResource StrStyle}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" Margin="0,0,0,8"/>
+                                                <ComboBox x:Name="ComboNotifyStyle" SelectionChanged="ComboNotifyStyle_SelectionChanged" Height="36" Width="200" HorizontalAlignment="Left">
+                                                    <ComboBoxItem Content="{DynamicResource StrStyleMinimal}"/>
+                                                    <ComboBoxItem Content="{DynamicResource StrStyleModern}"/>
+                                                </ComboBox>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Grid>
+
+                            
+                            <Grid x:Name="TabHelp" Visibility="Hidden">
+                                <ScrollViewer Style="{StaticResource MinimalScrollViewer}" VerticalScrollBarVisibility="Auto">
+                                    <StackPanel VerticalAlignment="Top" MaxWidth="540" HorizontalAlignment="Left">
+                                        <TextBlock Text="{DynamicResource StrHelpGuide}" FontSize="24" FontWeight="Light" Foreground="{StaticResource BrushTextPrimary}" Margin="0,0,0,25"/>
+                                        
+                                        <Border Background="{StaticResource BrushSurface}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" Padding="24" Margin="0,0,0,24" CornerRadius="16">
+                                            <StackPanel>
+                                                <TextBlock Text="{DynamicResource StrHowItWorks}" Foreground="{StaticResource BrushTextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                                <TextBlock Text="{DynamicResource StrHowItWorksDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" TextWrapping="Wrap" Margin="0,0,0,20"/>
+                                                
+                                                <TextBlock Text="{DynamicResource StrModes}" Foreground="{StaticResource BrushTextPrimary}" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                                <TextBlock Text="{DynamicResource StrModeLagSwitchDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" TextWrapping="Wrap" Margin="0,0,0,5"/>
+                                                <TextBlock Text="{DynamicResource StrModeDropDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" TextWrapping="Wrap" Margin="0,0,0,5"/>
+                                                <TextBlock Text="{DynamicResource StrModeStaticLagDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" TextWrapping="Wrap" Margin="0,0,0,20"/>
+
+                                                <TextBlock Text="{DynamicResource StrDirections}" Foreground="{StaticResource BrushTextPrimary}" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                                <TextBlock Text="{DynamicResource StrInboundDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" TextWrapping="Wrap" Margin="0,0,0,5"/>
+                                                <TextBlock Text="{DynamicResource StrOutboundDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" TextWrapping="Wrap" Margin="0,0,0,20"/>
+
+                                                <TextBlock Text="{DynamicResource StrOptimizationHelp}" Foreground="{StaticResource BrushTextPrimary}" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                                <TextBlock Text="{DynamicResource StrOptimizationDesc}" Foreground="{StaticResource BrushTextSecondary}" FontSize="13" TextWrapping="Wrap" Margin="0,0,0,5"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Grid>
+
+                        </Grid>
+
+                        
+                    </Grid>
+                </Grid>
+
+                
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

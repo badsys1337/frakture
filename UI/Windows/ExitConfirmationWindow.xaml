@@ -1,0 +1,78 @@
+<Window x:Class="TriggerLAG.ExitConfirmationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Exit Confirmation" Height="200" Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="StyleActionButton">
+            <Setter Property="Background" Value="{StaticResource BrushSurfaceHighlight}"/>
+            <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="15,8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource BrushAccent}"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource BrushBackground}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="16">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            
+            <Grid Grid.Row="0">
+                <TextBlock Text="{DynamicResource StrExitFrakture}" FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource BrushTextPrimary}" VerticalAlignment="Center"/>
+                <Button HorizontalAlignment="Right" Content="&#xE8BB;" Click="BtnCancel_Click"
+                        Foreground="{StaticResource BrushTextSecondary}" Background="Transparent" BorderThickness="0"
+                        FontFamily="Segoe MDL2 Assets" FontSize="12" Cursor="Hand" Width="30" Height="30">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#33FFFFFF"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+            
+            <TextBlock Grid.Row="1" Text="{DynamicResource StrExitPrompt}" 
+                       Foreground="{StaticResource BrushTextSecondary}" FontSize="14" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="{DynamicResource StrHideToTray}" Style="{StaticResource StyleActionButton}" Click="BtnHideToTray_Click" Width="140" Margin="0,0,15,0"/>
+                <Button Content="{DynamicResource StrExitApplication}" Style="{StaticResource StyleActionButton}" Click="BtnExit_Click" Width="140"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
