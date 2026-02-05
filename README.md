@@ -1,27 +1,23 @@
-# Frakture (TriggerLAG)
+# Frakture (TriggerLAG) 🎯
 
-Frakture (also known as TriggerLAG) is a sophisticated network optimization and macro utility designed to enhance performance and provide advanced control in network-intensive applications.
+A C# utility for network optimization and workflow automation.
 
-## Features
+### Features 🚀
+- **Network Engine**: Advanced lag simulation modes (Invisible Peek, Delay Peek, and Static/Adaptive Lag).
+- **Macros**: Specialized macros for double-editing and item collection.
+- **Optimizers**: Integrated tools for TCP tweaks, DNS flushing, and Winsock resets to help with latency.
+- **GUI**: Clean and technical interface for easy monitoring and control.
+- **Language**: Full support for English and Russian.
 
-- **Network Engine**: Multiple lag simulation and optimization modes (Invisible Peek, Delay Peek, Static Lag, Adaptive Lag).
-- **Macro Engine**: Customizable double-edit and item collection macros.
-- **System Optimizer**: TCP registry tweaks, DNS flushing, and Winsock resetting for lower latency.
-- **Multi-language Support**: Supports English and Russian interfaces.
-- **Brutalst UI**: A modern, technical aesthetic with technical stats and interactive status widgets.
+### Tech Stack 💻
+- **Language**: C#
+- **Framework**: .NET / WPF
+- **Focus**: Network precision and low-latency execution.
 
-## Technical Details
-
-- Built with .NET and WPF.
-- Direct interaction with network stacks for precision control.
-- Low-latency macro execution.
-
-## Getting Started
-
-1. Clone the repository.
+### Setup ⚙️
+1. Clone the repo.
 2. Open `TriggerLAG.csproj` in Visual Studio.
-3. Build and Run.
+3. Build and run.
 
-## License
-
+---
 Personal use only.
